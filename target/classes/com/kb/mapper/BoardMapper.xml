@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.mapper.BoardMapper">
+   <select id="getList" resultType="com.kb.domain.BoardVO">
+      SELECT * FROM tbl_board ORDER BY bno DESC LIMIT 0, 10
+   </select>
+   
+   <!-- id=메소드명 -->
+   <insert id="insert">
+      INSERT INTO tbl_board(title, content, wrtier)
+      VALUES (#{title}, #{content}, #{wrtier});
+   </insert>
+   
+   <select id="read" resultType="com.kb.domain.BoardVO">
+   	SELECT * FROM tbl_board WHERE bno = #{bno}
+   </select>
+   
+   <update id="update">
+   	UPDATE tbl_board SET title = #{title}, content = #{content}, wrtier = #{wrtier}, updateDate = now()
+   	WHERE bno = #{bno}
+   </update>
+   
+   <delete id="delete">
+   	DELETE FROM tbl_board WHERE bno = #{bno}
+   </delete>
+</mapper>
+
