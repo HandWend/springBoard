@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kb.domain.BoardVO;
+import com.kb.domain.Criteria;
+import com.kb.domain.PageDTO;
 import com.kb.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -29,19 +31,28 @@ public class BoardController {
 	//그게 spring에서는 model이다.
 	
 	// /board/list
-	@GetMapping("list")
-	public void list(Model model) {
-		//얘가 list로 오면 목록을 찍어라.
-		//파일이 없을 때는 당연히 웹에 나오지 않지만 console에는 목록이 찍힌다.
-		log.info("목록");
-		//view에다 값을 던지는 것.
-		//<collection>에 해당한다. 컨트롤러에서 뷰로 모델을 통해 값을 전달한다.
-		model.addAttribute("list", service.getList());
-		
+//	@GetMapping("list")
+//	public void list(Model model) {
+//		//얘가 list로 오면 목록을 찍어라.
+//		//파일이 없을 때는 당연히 웹에 나오지 않지만 console에는 목록이 찍힌다.
+//		log.info("목록");
+//		//view에다 값을 던지는 것.
+//		//<collection>에 해당한다. 컨트롤러에서 뷰로 모델을 통해 값을 전달한다.
+//		model.addAttribute("list", service.getList());
+//		
+//	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET) 
+	public void list(Criteria cri, Model model) {
+		log.info(cri);
+		model.addAttribute("list", service.getListWithPaging(cri));
+		model.addAttribute("pageMaker", new PageDTO(service.getListWithCnt(), cri));
 	}
+	
 	/* 아래의 RequestMapping 과 같음. return이 없는 void와 return이 있는 String의 차이
 	 * public String register() { return "register"; }
 	 */
+	
 	@RequestMapping(value = "/register", method = RequestMethod.GET) 
 	public void register() {
 		

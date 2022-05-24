@@ -3,8 +3,11 @@ package com.kb.service;
 import java.util.List;
 
 import com.kb.domain.BoardVO;
+import com.kb.domain.Criteria;
 
 public interface BoardService {
+
+	
 
 	// insert
 	public void register(BoardVO board);
@@ -20,4 +23,10 @@ public interface BoardService {
 	
 	// read(list)
 	public List<BoardVO> getList();
+	
+	public List<BoardVO> getListWithPaging(Criteria cri);
+
+	public int getListWithCnt();
+
+	
 }

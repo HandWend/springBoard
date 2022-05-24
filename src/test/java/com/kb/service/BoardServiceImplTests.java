@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kb.domain.BoardVO;
+import com.kb.domain.Criteria;
 import com.kb.mapper.BoardMapper;
 
 import lombok.Setter;
@@ -36,11 +37,16 @@ public class BoardServiceImplTests {
 		service.getList();		// 호출만 하면  된다.
 	}
 	
-	@Test
+	
 	public void get() {
 		log.info(service.get(14));
 	}
 	
+	@Test
+	public void getListWithPaging() {
+		Criteria cri = new Criteria();
+		service.getListWithPaging(cri);
+	}
 	
 	public void modify() {
 		BoardVO board = new BoardVO();
