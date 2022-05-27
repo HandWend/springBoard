@@ -8,29 +8,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kb.domain.BoardVO;
-import com.kb.domain.BoardCriteria;
-import com.kb.domain.BoardPageDTO;
-import com.kb.service.BoardService;
+import com.kb.domain.MemberCriteria;
+import com.kb.domain.MemberPageDTO;
+import com.kb.domain.MemberVO;
+import com.kb.service.MemberService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-// 이 컨트롤러에 사용되는 애들은 다 board다.
-@RequestMapping("/board/*")
+// 이 컨트롤러에 사용되는 애들은 다 member다.
+@RequestMapping("/member/*")
 @Controller
 @Log4j
 @AllArgsConstructor
-public class BoardController {
+public class MemberController {
 	
 	//service 객체 생성 
 	//service.메소드() 호출하여 매퍼까지 호출 가능
-	private BoardService service;
+	private MemberService service;
 	
 	//controller에서 값을 view에 줄 때 request.setAttribute사용했음.
 	//그게 spring에서는 model이다.
 	
-	// /board/list
+	// /member/list
 //	@GetMapping("list")
 //	public void list(Model model) {
 //		//얘가 list로 오면 목록을 찍어라.
@@ -43,10 +43,10 @@ public class BoardController {
 //	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET) 
-	public void list(BoardCriteria cri, Model model) {
+	public void list(MemberCriteria cri, Model model) {
 		log.info(cri);
 		model.addAttribute("list", service.getListWithPaging(cri));
-		model.addAttribute("pageMaker", new BoardPageDTO(service.getListWithCnt(cri), cri));
+		model.addAttribute("pageMaker", new MemberPageDTO(service.getListWithCnt(cri), cri));
 	}
 	
 	/* 아래의 RequestMapping 과 같음. return이 없는 void와 return이 있는 String의 차이
@@ -60,71 +60,71 @@ public class BoardController {
 	
 	// 오버로딩_메소드명은 같지만 변수명을 달리주는 것.
 	@RequestMapping(value = "/register", method = RequestMethod.POST) 
-	public String register(BoardVO board, RedirectAttributes rttr) {
+	public String register(MemberVO member, RedirectAttributes rttr) {
 		
 		
-		service.register(board);
+		service.register(member);
 		
-		return "redirect:/board/list";
+		return "redirect:/member/list";
 	}
 	
 	/*
 	 * @RequestMapping(value = "/get", method = RequestMethod.GET)
-	 * // @requestParam("도메인과 일치") public void get(@RequestParam("bno") int bno) {
-	 * model.addAttribute("board", service.get(bno)); System.out.println(bno);
+	 * // @requestParam("도메인과 일치") public void get(@RequestParam("num") int num) {
+	 * model.addAttribute("member", service.get(num)); System.out.println(num);
 	 * 
 	 * 
 	 * }
 	 */
 	
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	//public void get(int bno) {
-	public void get(@RequestParam("bno") int bno, Model model) {
+	//public void get(int num) {
+	public void get(@RequestParam("num") int num, Model model) {
 		
-		model.addAttribute("board", service.get(bno));
+		model.addAttribute("member", service.get(num));
 
 	}
 	
 	/*@RequestMapping(value = "/get", method = RequestMethod.POST)
-	//public void get(int bno) {
-	public void get(BoardVO board) {
+	//public void get(int num) {
+	public void get(memberVO member) {
 		
-		boolean result = service.modify(board);
+		boolean result = service.modify(member);
 		if(result) {
-			return "redirect:/board/list";
+			return "redirect:/member/list";
 		} else {
-			return "redirect:/board/get";
+			return "redirect:/member/get";
 		}*/
 		@RequestMapping(value = "/get", method = RequestMethod.POST)
-		//public void get(int bno) {
-		public String get(BoardVO board) {
+		//public void get(int num) {
+		public String get(MemberVO member) {
 			
-			boolean result = service.modify(board);
+			boolean result = service.modify(member);
 			if(result) {
-				return "redirect:/board/list";
+				return "redirect:/member/list";
 			} else {
-				return "redirect:/board/get?bno="+board.getBno();
+				return "redirect:/member/get?num="+member.getNum();
 			}
 
 		}
 		//GET 방식 삭제
 		@RequestMapping(value = "/remove", method = RequestMethod.GET)
-		//public void get(int bno) {
-		public String remove(@RequestParam("bno") int bno) {
+		//public void get(int num) {
+		public String remove(@RequestParam("num") int num) {
 			
-			service.remove(bno);
+			service.remove(num);
 
-			return "redirect:/board/list";
+			return "redirect:/member/list";
 		}
 		
 		@RequestMapping(value = "/remove", method = RequestMethod.POST)
-		//public void get(int bno) {
+		//public void get(int num) {
 		// param은 get 방식
-		public String remove(BoardVO board) {
+		public String remove(MemberVO member) {
 			
-			service.remove(board.getBno());
+			service.remove(member.getNum());
 
-			return "redirect:/board/list";
+			return "redirect:/member/list";
 		}
 		
 	}

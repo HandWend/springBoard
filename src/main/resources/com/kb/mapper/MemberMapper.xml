@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kb.mapper.MemberMapper">
+   <select id="getList" resultType="com.kb.domain.MemberVO">
+      SELECT * FROM tbl_member ORDER BY num DESC LIMIT 0, 10
+   </select>
+   
+   <!-- WHERE 1=1 추가 0527 -->
+   <!-- 추가: <choose> <when> -->
+  <select id="getListWithPaging" resultType="com.kb.domain.MemberVO">
+		<![CDATA[
+		SELECT * FROM tbl_member 
+		WHERE 1=1 
+		]]>
+		<choose>
+			<when test="type == 'uname'">
+			AND title LIKE concat('%',#{keyword},'%')
+			</when>
+			<when test="type == 'uid'">
+			AND content LIKE concat('%',#{keyword},'%')
+			</when>
+		</choose>
+		<![CDATA[
+		ORDER BY num DESC 
+		LIMIT #{amount} offset #{pageStart}
+		]]>
+	</select>
+   
+   <select id="getListWithCnt" resultType="int">
+      SELECT count(*) FROM tbl_member 
+      WHERE 1=1 
+		<choose>
+			<when test="type == 'uname'">
+			AND title LIKE concat('%',#{keyword},'%')
+			</when>
+			<when test="type == 'uid'">
+			AND content LIKE concat('%',#{keyword},'%')
+			</when>
+		</choose>
+		</select>
+   
+   
+   <!-- id=메소드명 -->
+   <insert id="insert">
+      INSERT INTO tbl_member(uname, schoolname, gradeclass, uid, upw, route, boardingplace, joindate, coupon)
+      VALUES (#{uname}, #{schoolname}, #{gradeclass}, #{uid}, #{upw}, #{route}, #{boardingplace}, now(), #{coupon});
+   </insert>
+   
+   <select id="read" resultType="com.kb.domain.MemberVO">
+   	SELECT * FROM tbl_member WHERE num = #{num}
+   </select>
+   
+   <update id="update">
+   	UPDATE tbl_member SET 
+   	uname = #{uname}, 
+   	schoolname = #{schoolname}, 
+   	gradeclass = #{gradeclass}, 
+   	uid = #{uid},
+   	upw = #{upw}, 
+   	route = #{route}, 
+   	boardingplace = #{boardingplace}, 
+   	coupon = #{coupon}, 
+   	WHERE num = #{num}
+   </update>
+   
+   <delete id="delete">
+   	DELETE FROM tbl_member WHERE num = #{num}
+   </delete>
+</mapper>
+
