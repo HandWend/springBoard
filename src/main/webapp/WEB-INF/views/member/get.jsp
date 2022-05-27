@@ -56,7 +56,7 @@
 $(document).ready(function(){
 	$("#btn_del").on("click",function(){
 		if(confirm("정말로 삭제하시겠습니까?")){
-			//GET 방식: location.href='remove?bno=${board.bno}';
+			//GET 방식: location.href='remove?num=${member.num}';
 			//POST 방식
 			$("#frm").attr("action","remove");
 			$("#frm").submit();

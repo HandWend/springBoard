@@ -40,7 +40,7 @@
 								<label>노선</label><input type="text" name="route" id="route" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
-								<label>탑승장소</label><input type="text" name="boardingplace" id="writer" class="form-control" value="" required="required">
+								<label>탑승장소</label><input type="text" name="boardingplace" id="boardingplace" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-default">회원가입</button>

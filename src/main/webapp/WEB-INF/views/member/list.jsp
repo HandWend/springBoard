@@ -42,8 +42,8 @@
 							  <form>
 								<select name="type" class="form-control" style="float:left; width:21%; height:32px;">
 									<option value="">전체</option>
-									<option value="title" ${pageMaker.cri.type == "title"?"selected='selected'":""}>제목</option>
-									<option value="content" ${pageMaker.cri.type == "content"?"selected='selected'":""}>내용</option>
+									<option value="uname" ${pageMaker.cri.type == "uname"?"selected='selected'":""}>학생명</option>
+									<option value="uid" ${pageMaker.cri.type == "uid"?"selected='selected'":""}>연락처</option>
 								</select>
 								<input type="text" name="keyword" placeholder="검색어를 입력하세요." value="${pageMaker.cri.keyword}" class="form-control" style="float:left; width:50%; height:32px;">
 								<button class="btn btn-default btn-sm" style="float:left;">검색</button>

@@ -17,10 +17,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		]]>
 		<choose>
 			<when test="type == 'uname'">
-			AND title LIKE concat('%',#{keyword},'%')
+			AND uname LIKE concat('%',#{keyword},'%')
 			</when>
 			<when test="type == 'uid'">
-			AND content LIKE concat('%',#{keyword},'%')
+			AND uid LIKE concat('%',#{keyword},'%')
 			</when>
 		</choose>
 		<![CDATA[
@@ -34,10 +34,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
       WHERE 1=1 
 		<choose>
 			<when test="type == 'uname'">
-			AND title LIKE concat('%',#{keyword},'%')
+			AND uname LIKE concat('%',#{keyword},'%')
 			</when>
 			<when test="type == 'uid'">
-			AND content LIKE concat('%',#{keyword},'%')
+			AND uid LIKE concat('%',#{keyword},'%')
 			</when>
 		</choose>
 		</select>
