@@ -13,7 +13,7 @@ public interface BoardMapper {
 	public List<BoardVO> getListWithPaging(BoardCriteria cri);
 	
 	// 등록하기
-	public void insert(BoardVO board);
+	public int insert(BoardVO board);
 	
 	// 읽기(특정번호)
 	public BoardVO read(int bno);

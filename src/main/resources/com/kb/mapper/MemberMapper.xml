@@ -54,7 +54,8 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
    </select>
    
    <update id="update">
-   	UPDATE tbl_member SET 
+   	UPDATE tbl_member SET
+   	num = #{num},
    	uname = #{uname}, 
    	schoolname = #{schoolname}, 
    	gradeclass = #{gradeclass}, 
@@ -63,7 +64,7 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
    	route = #{route}, 
    	boardingplace = #{boardingplace}, 
    	coupon = #{coupon}, 
-   	WHERE num = #{num}
+   	WHERE num = #{num};
    </update>
    
    <delete id="delete">

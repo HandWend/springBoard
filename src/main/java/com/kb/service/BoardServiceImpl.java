@@ -1,12 +1,17 @@
 package com.kb.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kb.domain.BoardVO;
+import com.kb.domain.AttachFileDTO;
+import com.kb.domain.BoardAttachVO;
 import com.kb.domain.BoardCriteria;
+import com.kb.mapper.BoardAttachMapper;
 import com.kb.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -17,59 +22,85 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @AllArgsConstructor
 public class BoardServiceImpl implements BoardService {
+	
+	
+	@Setter(onMethod_ = @Autowired)
+	private BoardMapper mapper;
 
 	@Setter(onMethod_ = @Autowired)
-	private BoardMapper mapper;	//mapper 객체를 만들어야 mapper로 갈거 아녀~
-	
-	
-	
-	@Override
-	public void register(BoardVO board) {
-		log.info("register");	// 게시글 등록한다~
-		mapper.insert(board); 	// service -> mapper의 insert
-		// service의 register 호출하면 mapper의 insert가 딩동~
-	}
+	private BoardAttachMapper attachMapper;	
 
+
+	@Override
+	@Transactional
+	public void register(BoardVO board) {
+		log.info("register");
+		mapper.insert(board);
+
+		Iterator<BoardAttachVO> it = board.getAttachList().iterator();
+		while(it.hasNext()) {
+			BoardAttachVO attachVO = it.next();
+			attachVO.setBno(board.getBno());
+			attachMapper.insert(attachVO);
+		}
+	}
+	
 	@Override
 	public BoardVO get(int bno) {
-		// TODO Auto-generated method stub
-		return mapper.read(bno);
+		BoardVO vo = mapper.read(bno);
+		List<BoardAttachVO> attachList = attachMapper.read(bno);
+		vo.setAttachList(attachList);
+		return vo;
 	}
 
 	@Override
+	@Transactional
 	public boolean modify(BoardVO board) {
-		// TODO Auto-generated method stub
-		return mapper.update(board) == 1;
+		mapper.update(board);
+		attachMapper.delete(board);
+		Iterator<BoardAttachVO> it = board.getAttachList().iterator();
+		while(it.hasNext()) {
+			BoardAttachVO attachVO = it.next();
+			attachVO.setBno(board.getBno());
+			attachMapper.insert(attachVO);
+		}
+		return true;
 	}
-
+	
+	
 	@Override
 	public boolean remove(int bno) {
-		// TODO Auto-generated method stub
 		return mapper.delete(bno) == 1;
+	}
+	
+	@Override
+	@Transactional
+	public boolean remove(BoardVO board) {
+		attachMapper.delete(board);
+		return mapper.delete(board.getBno()) == 1;
 	}
 
 	@Override
 	public List<BoardVO> getList() {
-		log.info("getList..................");
-		return mapper.getList();				// 전체 내용을 보여달라
+		log.info("getList...................");
+		
+		return mapper.getList();
 	}
 
 	@Override
 	public List<BoardVO> getListWithPaging(BoardCriteria cri) {
-		//전체 내용
-		log.info("getList..................");
+		log.info("getList...................");
 		
 		return mapper.getListWithPaging(cri);
 	}
 
 	@Override
 	public int getListWithCnt(BoardCriteria cri) {
-log.info("getList..................");
+		log.info("getListWithCnt...................");
 		
 		return mapper.getListWithCnt(cri);
 	}
-
+	
 	
 
-	
 }

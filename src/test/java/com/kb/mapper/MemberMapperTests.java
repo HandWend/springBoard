@@ -9,6 +9,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.kb.domain.BoardVO;
+import com.kb.domain.MemberCriteria;
+import com.kb.domain.MemberVO;
 import com.kb.domain.BoardCriteria;
 
 import lombok.Setter;
@@ -18,10 +20,10 @@ import lombok.extern.log4j.Log4j;
 //DB연결 들어있는 부분
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class BoardMapperTests {
+public class MemberMapperTests {
 
 	@Setter(onMethod_ =@Autowired)
-	BoardMapper mapper;
+	MemberMapper mapper;
 	
 	
 	public void getListTest() {
@@ -30,23 +32,25 @@ public class BoardMapperTests {
 	
 	@Test
 	public void getListWithPaging() {
-		BoardCriteria cri = new BoardCriteria();
+		MemberCriteria cri = new MemberCriteria();
 		cri.setPageNum(1);
-		cri.setAmount(20);
-		/*
-		 * cri.setType("title"); cri.setKeyword("새로");
-		 */
-		List<BoardVO> list = mapper.getListWithPaging(cri);
+		cri.setAmount(20);/*
+							 * cri.setType("uid"); cri.setKeyword("uname");
+							 */
+		List<MemberVO> list = mapper.getListWithPaging(cri);
 		list.forEach(board -> log.info(board));
 	}
 	
-	
 	public void insert() {
-		BoardVO board = new BoardVO();
-		board.setTitle("새로 작성한 글");
-		board.setContent("새로 작성한 내용");
-		board.setWriter("newbie");
-		mapper.insert(board);
+		MemberVO member = new MemberVO();
+		member.setUname("");
+		member.setSchoolname("");
+		member.setGradeclass("");
+		member.setUid("");
+		member.setUpw("");
+		member.setRoute("");
+		member.setBoardingplace("");
+		mapper.insert(member);
 	}
 	
 	
@@ -56,16 +60,21 @@ public class BoardMapperTests {
 	
 	
 	public void update() {
-		BoardVO board = new BoardVO();
-		board.setBno(13);
-		board.setTitle("다시 수정한 글");
-		board.setContent("다시 수정한 내용");
-		board.setWriter("newbie");
-		mapper.update(board);
+		MemberVO member = new MemberVO();
+		member.setUname("");
+		member.setSchoolname("");
+		member.setGradeclass("");
+		member.setUid("");
+		member.setUpw("");
+		member.setRoute("");
+		member.setBoardingplace("");
+		mapper.update(member);
 	}
 	
 	
 	public void delete() {
 		mapper.delete(13);
 	}
+	
+	
 }

@@ -28,7 +28,7 @@ public class BoardServiceImplTests {
 		BoardVO board = new BoardVO();
 		board.setTitle("새로 작성한 글");
 		board.setContent("새로 작성한 내용");
-		board.setWrtier("newbie");
+		board.setWriter("newbie");
 		service.register(board);
 	}
 	
@@ -55,7 +55,7 @@ public class BoardServiceImplTests {
 		board.setBno(14);
 		board.setTitle("다시 수정한 글");
 		board.setContent("다시 수정한 내용");
-		board.setWrtier("newbie");
+		board.setWriter("newbie");
 		service.modify(board);
 	}
 	

@@ -24,7 +24,8 @@
 					<div class="panel-body">
 					<!--  Get으로 온걸 Post로 넘긴다. -->
 					<!-- action에 아무것도 안 적으면 자기자신의 페이지를 부른다. -->
-						<form method="post" action="">
+					<!-- 첨부파일: encType="multipart/form-data" -->
+						<form method="post" action="" encType="multipart/form-data">
 						<div class="form-group">
 							<label>Title</label><input type="text" name="title" id="title" class="form-control" value="" required="required">
 						</div>	
@@ -32,7 +33,10 @@
 							<label>Content</label><textarea required="required" name="content" id="content" class="form-control" style="resize:none"></textarea>
 						</div>
 						<div class="form-group">
-							<label>Writer</label><input required="required" type="text" name="wrtier" id="wrtier" class="form-control" value="">
+							<label>File</label><input required="required" multiple="multiple" type="file" name="upfile" id="upfile" class="form-control" value="">
+						</div>
+						<div class="form-group">
+							<label>Writer</label><input required="required" type="text" name="writer" id="writer" class="form-control" value="">
 						</div>	
 						<div class="form-group">
 							<button type="submit" class="btn btn-primary">Submit</button>

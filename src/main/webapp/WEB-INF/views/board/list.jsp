@@ -41,7 +41,7 @@
 					<td>${board.bno }</td>
 					<td><a href="get?bno=${board.bno }">${board.title }</a></td>
 					<!-- get 방식으로 가는 것. -->
-					<td>${board.wrtier }</td>
+					<td>${board.writer }</td>
 					<td><f:formatDate value="${board.regDate }"
 							pattern="Y-M-d HH:mm:ss" /></td>
 					<td><f:formatDate value="${board.updateDate }"
