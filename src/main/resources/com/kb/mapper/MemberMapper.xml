@@ -4,13 +4,11 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.kb.mapper.MemberMapper">
-   <select id="getList" resultType="com.kb.domain.MemberVO">
-      SELECT * FROM tbl_member ORDER BY num DESC LIMIT 0, 10
-   </select>
-   
-   <!-- WHERE 1=1 추가 0527 -->
-   <!-- 추가: <choose> <when> -->
-  <select id="getListWithPaging" resultType="com.kb.domain.MemberVO">
+	<select id="getList" resultType="com.kb.domain.MemberVO">
+		SELECT * FROM tbl_member ORDER BY num DESC LIMIT 0, 100
+	</select>
+	
+	<select id="getListWithPaging" resultType="com.kb.domain.MemberVO">
 		<![CDATA[
 		SELECT * FROM tbl_member 
 		WHERE 1=1 
@@ -28,10 +26,10 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		LIMIT #{amount} offset #{pageStart}
 		]]>
 	</select>
-   
-   <select id="getListWithCnt" resultType="int">
-      SELECT count(*) FROM tbl_member 
-      WHERE 1=1 
+	
+	<select id="getListWithCnt" resultType="int">
+		SELECT count(*) FROM tbl_member
+		WHERE 2<![CDATA[>]]>1 
 		<choose>
 			<when test="type == 'uname'">
 			AND uname LIKE concat('%',#{keyword},'%')
@@ -40,35 +38,56 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 			AND uid LIKE concat('%',#{keyword},'%')
 			</when>
 		</choose>
-		</select>
-   
-   
-   <!-- id=메소드명 -->
-   <insert id="insert">
-      INSERT INTO tbl_member(uname, schoolname, gradeclass, uid, upw, route, boardingplace, joindate, coupon)
-      VALUES (#{uname}, #{schoolname}, #{gradeclass}, #{uid}, #{upw}, #{route}, #{boardingplace}, now(), #{coupon});
-   </insert>
-   
-   <select id="read" resultType="com.kb.domain.MemberVO">
-   	SELECT * FROM tbl_member WHERE num = #{num}
-   </select>
-   
-   <update id="update">
-   	UPDATE tbl_member SET
-   	num = #{num},
-   	uname = #{uname}, 
-   	schoolname = #{schoolname}, 
-   	gradeclass = #{gradeclass}, 
-   	uid = #{uid},
-   	upw = #{upw}, 
-   	route = #{route}, 
-   	boardingplace = #{boardingplace}, 
-   	coupon = #{coupon}, 
-   	WHERE num = #{num};
-   </update>
-   
-   <delete id="delete">
-   	DELETE FROM tbl_member WHERE num = #{num}
-   </delete>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tbl_member (uname, schoolname, gradeclass, uid, upw, route, boardingplace, joindate, coupon)
+		VALUES (#{uname}, #{schoolname}, #{gradeclass}, #{uid}, sha1(#{upw}), #{route}, #{boardingplace}, now(), #{coupon})
+	</insert>
+	
+	<select id="read" resultType="com.kb.domain.MemberVO">
+		SELECT * FROM tbl_member WHERE num = #{num}
+	</select>
+	
+	<resultMap type="com.kb.domain.MemberVO" id="memberMap">
+		<id property="uid" column="uid" />
+		<result property="uid" column="uid"/>
+		<result property="upw" column="upw"/>
+		<result property="uname" column="uname"/>
+		<collection property="authList" resultMap="authMap"></collection>
+	</resultMap>
+	
+	<resultMap type="com.kb.domain.AuthorVO" id="authMap">
+		<result property="uid" column="uid"/>
+		<result property="authority" column="authority"/>
+	</resultMap>
+	
+	<select id="readLogin" resultMap="memberMap">
+		SELECT tm.*, ta.authority
+		FROM tbl_member as tm JOIN tbl_author as ta 
+		ON tm.uid = ta.uid
+		WHERE tm.uid = #{userid}
+	</select>
+	
+	<update id="update">
+		UPDATE tbl_member SET uname = #{uname}, 
+						schoolname = #{schoolname}, 
+						gradeclass = #{gradeclass}, 
+						uid = #{uid}, 
+						upw = sha1(#{upw}), 
+						route = #{route}, 
+						boardingplace = #{boardingplace}, 
+						coupon = #{coupon}
+		WHERE num = #{num}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM tbl_member WHERE num = #{num}
+	</delete>
+	
 </mapper>
+
+
+
+
 

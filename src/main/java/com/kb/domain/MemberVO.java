@@ -1,6 +1,7 @@
 package com.kb.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.Data;
 
@@ -17,5 +18,7 @@ public class MemberVO {
 	private String boardingplace;
 	private Timestamp joindate;
 	private int coupon;
+	
+	private List<AuthorVO> authList;
 	
 }

@@ -33,7 +33,7 @@
 	<h4 class="form-title m-b-xl text-center">로그인</h4>
 	<form method="post" action="/login">
 		<div class="form-group">
-			<input id="sign-in-email" type="text" name="username" class="form-control" placeholder="Username">
+			<input id="sign-in-email" type="text" name="username" class="form-control" placeholder="User name">
 		</div>
 
 		<div class="form-group">
@@ -46,7 +46,7 @@
 				<label for="keep_me_logged_in">Keep me signed in</label>
 			</div>
 		</div>
-		<input type="submit" class="btn btn-primary" value="SING IN">
+		<input type="submit" class="btn btn-primary" value="SIGN IN">
 		
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
 		
@@ -63,5 +63,10 @@
 
 
 	</div><!-- .simple-page-wrap -->
+	
+	<!-- 추가하고 싶은 것 -->
+	<!-- 영어 대문자(CapsLock)이 눌렸을 시 경고창 -->
+	<!-- 관리자 페이지에 멤버 관리(글 못 쓰게 하기 또는 회원정지) 및 게시판 관리(글 삭제) -->
+	<!-- 멤버 페이지에서 자신이 몇 번 이 사이트에 로그인했는가 표시 -->
 </body>
 </html>

@@ -20,6 +20,8 @@ public interface MemberMapper {
 	// 읽기(특정번호)
 	public MemberVO read(int num);
 	
+	public MemberVO readLogin(String userid);
+	
 	public int update(MemberVO member);
 	
 	public int delete(int num);

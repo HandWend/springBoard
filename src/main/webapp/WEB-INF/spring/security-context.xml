@@ -8,6 +8,13 @@
 
 	<bean id="LoginSuccess" class="com.kb.security.LoginSuccessHandler"></bean>
 
+	<!-- <bean id="passwordEncoder" class="com.kb.security.NoopPasswordEncoder"></bean> -->
+	
+	<bean id="bcryptPasswordEncoder"
+	class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	
+	<bean id="customUserDetailsService" class="com.kb.security.CustomUserDetailsService"></bean>
+	
 	<!-- 기본설정 -->
 	<!-- 로그인 하는 폼 제공: form-login -->
 	<security:http>
@@ -18,6 +25,8 @@
 		
 		<security:form-login login-page="/customLogin" authentication-success-handler-ref="LoginSuccess"/>
 		
+		<security:logout logout-url="/customLogout" invalidate-session="true"/>
+		
 		<security:access-denied-handler error-page="/error_page/err_403" />
 		
 		<!-- <security:csrf disabled="true"/> -->
@@ -26,13 +35,20 @@
 	
 	<!-- user or admin -->
 	<security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service>
-			<!-- {noop}xxx HomeController로 이동 -->
-			<!-- 아래 2줄: 인증과 권한 -->
+		<security:authentication-provider user-service-ref="customUserDetailsService">
+		<!-- data-source-ref: root-context.xml에 있는 hicari bean의 id -->
+			<!-- <security:jdbc-user-service data-source-ref="dataSource"/>  -->
+			<!-- users-by-username-query="SELECT uid username, upw password, '1' FROM tbl_member WHERE uid = ?"
+			authorities-by-username-query="SELECT uid, authority FROM tbl_author WHERE uid = ?"/> -->
+			
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+			<!-- <security:password-encoder ref="passwordEncoder"/> -->
+			<!-- <security:user-service>
+			{noop}xxx HomeController로 이동
+			아래 2줄: 인증과 권한
 				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
 				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
-			</security:user-service>
+			</security:user-service> -->
 		</security:authentication-provider>
 	</security:authentication-manager>
 
