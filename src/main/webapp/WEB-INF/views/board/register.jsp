@@ -26,6 +26,7 @@
 					<!-- action에 아무것도 안 적으면 자기자신의 페이지를 부른다. -->
 					<!-- 첨부파일: encType="multipart/form-data" -->
 						<form method="post" action="" encType="multipart/form-data">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 						<div class="form-group">
 							<label>Title</label><input type="text" name="title" id="title" class="form-control" value="" required="required">
 						</div>	

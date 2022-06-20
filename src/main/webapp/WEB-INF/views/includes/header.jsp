@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +9,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 	<meta name="description" content="Admin, Dashboard, Bootstrap" />
 	<link rel="shortcut icon" sizes="196x196" href="/resources/assets/images/logo.png">
-	<title>Infinity - Bootstrap Admin Template</title>
+	<title>Infinity - Bootstrap Admin Template </title>
 	
 	<link rel="stylesheet" href="/resources/libs/bower/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/resources/libs/bower/material-design-iconic-font/dist/css/material-design-iconic-font.css">
@@ -23,10 +23,10 @@
 	<!-- endbuild -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300">
 	<script src="/resources/libs/bower/breakpoints.js/dist/breakpoints.min.js"></script>
-	<script src="/resources/libs/bower/jquery/dist/jquery.js"></script>
 	<script>
 		Breakpoints();
 	</script>
+	<script src="/resources/libs/bower/jquery/dist/jquery.js"></script>
 </head>
 	
 <body class="menubar-left menubar-unfold menubar-light theme-primary">
@@ -173,7 +173,7 @@
       </div>
       <div class="media-body">
         <div class="foldable">
-          <h5><a href="javascript:void(0)" class="username">John Doe</a></h5>
+          <h5><a href="javascript:void(0)" class="username"><sec:authentication property="principal.member.uname"/></a></h5>
           <ul>
             <li class="dropdown">
               <a href="javascript:void(0)" class="dropdown-toggle usertitle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -201,10 +201,18 @@
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                  <a class="text-color" href="logout.html">
+                  <a class="logout text-color" href="#" onclick="logout_btn();">
                     <span class="m-r-xs"><i class="fa fa-power-off"></i></span>
-                    <span>Home</span>
+                    <span>Logout</span>
                   </a>
+                  <form id="logout" action="/customLogout" method="post">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+				  </form>
+				  <script>
+				  	function logout_btn(){
+				  		$("#logout").submit();
+				  	}
+				  </script>
                 </li>
               </ul>
             </li>
@@ -227,6 +235,18 @@
             <li><a href="index.html"><span class="menu-text">Dashboard 1</span></a></li>
             <li><a href="dashboard.2.html"><span class="menu-text">Dashboard 2</span></a></li>
             <li><a href="dashboard.3.html"><span class="menu-text">Dashboard 3</span></a></li>
+          </ul>
+        </li>
+        
+        <li class="has-submenu">
+          <a href="javascript:void(0)" class="submenu-toggle">
+            <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
+            <span class="menu-text">스마트학습방</span>
+            <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
+          </a>
+          <ul class="submenu">
+            <li><a href="/member/list"><span class="menu-text">회원관리</span></a></li>
+            <li><a href="/board/list"><span class="menu-text">갤러리</span></a></li>
           </ul>
         </li>
         

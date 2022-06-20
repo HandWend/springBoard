@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="/resources/assets/css/core.css">
 	<link rel="stylesheet" href="/resources/assets/css/misc-pages.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body class="simple-page">
 	<div id="back-to-home">
@@ -33,17 +34,17 @@
 	<h4 class="form-title m-b-xl text-center">로그인</h4>
 	<form method="post" action="/login">
 		<div class="form-group">
-			<input id="sign-in-email" type="text" name="username" class="form-control" placeholder="User name">
+			<input id="uid" type="text" name="username" class="form-control" placeholder="User name">
 		</div>
 
 		<div class="form-group">
-			<input id="sign-in-password" type="password" name="password" class="form-control" placeholder="Password">
+			<input id="upw" type="password" name="password" class="form-control" placeholder="Password">
 		</div>
 
 		<div class="form-group m-b-xl">
 			<div class="checkbox checkbox-primary">
-				<input type="checkbox" id="keep_me_logged_in" name="remember-me"/>
-				<label for="keep_me_logged_in">Keep me signed in</label>
+				<input type="checkbox" id="saveId" name="saveId" value="save"/>
+				<label for="saveId">Keep Id</label>
 			</div>
 		</div>
 		<input type="submit" class="btn btn-primary" value="SIGN IN">
@@ -68,5 +69,31 @@
 	<!-- 영어 대문자(CapsLock)이 눌렸을 시 경고창 -->
 	<!-- 관리자 페이지에 멤버 관리(글 못 쓰게 하기 또는 회원정지) 및 게시판 관리(글 삭제) -->
 	<!-- 멤버 페이지에서 자신이 몇 번 이 사이트에 로그인했는가 표시 -->
+	<script>
+	$(document).ready(function(){
+		
+		//document.cookie = "chkId="+encodeURIComponent("한글");
+		//alert(document.cookie);
+		console.log(document.cookie.split('=')[1]);
+		$('input[name=uid]').val(document.cookie.split('=')[1]);
+		
+		if(document.cookie.split('=')[1] != undefined && document.cookie.split('=')[1] != ""){
+			$('#saveId').prop("checked", true);
+		}
+		
+		$("input[type=checkbox]").on("click", function(){
+			if($("input[type=checkbox]").is(":checked")){
+				alert("공공장소에서는 사용하지 마세요.");
+				
+				let saveId = $("#uid").val();
+				let expires = new Date(Date.now()+((60*60*24)*1000));
+				
+				document.cookie = "chkId="+saveId+"; path=/; expires="+expires;
+			} else {
+				document.cookie = "chkId=; path=/; expires=-1";
+			}
+		});
+	});
+</script>	
 </body>
 </html>

@@ -17,7 +17,7 @@
 
 <div class="col-md-12">
 	<div class="widget p-lg">
-		 <h4 style="display: inline;" class="m-b-lg">Board List Page</h4> 
+		 <h4 style="display: inline;" class="m-b-lg">Board & Gallery</h4> 
 		
 		<a href="register" style="float: right;" class="btn btn-primary" role="button">Register New Board</a><br/>
 		

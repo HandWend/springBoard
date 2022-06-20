@@ -26,6 +26,7 @@
 					<!-- action에 값이 없는 것은  자기 자신에게로 값을 던진다. -->
 						<form id="frm" method="post" action="" enctype="multipart/form-data">
 						<input type="hidden" id="bno" name="bno" value=" ${board.bno }" required="required">
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 						<div class="form-group">
 							<label>Title</label><input type="text" name="title" id="title" class="form-control" value="${board.title }" required="required">
 						</div>	
