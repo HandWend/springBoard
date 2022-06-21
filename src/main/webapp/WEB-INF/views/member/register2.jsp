@@ -20,7 +20,7 @@
 					</p>
 
 					<div class="panel-body">
-						<form method="post" action="" id="tmpSendFrm">
+						<form method="post" action="">
 						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"/>
 						<input type="hidden" name="authority" value="ROLE_MEMBER"/>
 							<div class="form-group">
@@ -45,42 +45,14 @@
 								<label>탑승장소</label><input type="text" name="boardingplace" id="boardingplace" class="form-control" value="" required="required">
 							</div>
 							<div class="form-group">
-								<button type="submit" id="submit" class="btn btn-default">회원가입</button>
+								<button type="submit" class="btn btn-default">회원가입</button>
 								<button type="button" class="btn btn-default">취소</button>
 							</div>
 						</form>
 					</div>
 				</div><!-- .widget -->
 			</div><!-- END column -->
-<script>
-$(document).ready(function(){
-	$("#submit").on("click",function(e){
-		e.preventDefault();
-		
-		let uname = $("#uname").val();
-		let uid = $("#uid").val();
-		let upw = $("#upw").val();
-		
-		$.ajax({
-			type: "POST",
-			url: '/data/members/new',	// form을 전송할 실제 파일경로
-			data: JSON.stringify({uname:uname, uid:uid, upw:upw}),
-			contentType:"application/json; charset=utf-8",
-			beforeSend : function() {
-				// 전송 전 실행 코드
-			},
-			success: function (data) {
-				location.href="/member/list";
-			},
-			error: function (e) {
-				// 전송 후 에러 발생 시 실행 코드
-				console.log("ERROR : ", e);
-			}
-		});
-	});
-});
-	
-</script>
+
 <!-- JSP 액션태그 include -->
 <jsp:include page="../includes/footer.jsp"></jsp:include>
 <!-- JSP include -->
